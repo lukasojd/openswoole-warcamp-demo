@@ -10,6 +10,7 @@ use App\Exception\UserAlreadyExistsException;
 use App\Exception\UserDoesNotExistException;
 use App\Factory\UserFactory;
 use App\Repository\UserRepository;
+use App\Response\User\UserListResponse;
 
 final readonly class UserHandler
 {
@@ -50,11 +51,8 @@ final readonly class UserHandler
         }
     }
 
-    /**
-     * @return array<User>
-     */
-    public function getUserList(): array
+    public function getUserList(): UserListResponse
     {
-        return $this->userRepository->getUserList();
+        return new UserListResponse($this->userRepository->getUserList());
     }
 }

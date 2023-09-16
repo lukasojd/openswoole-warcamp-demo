@@ -1,3 +1,12 @@
 framework:
     cache:
         prefix_seed: openswoole-demo
+
+        app: redis.pool
+
+        default_redis_provider: '%env(resolve:REDIS_DSN)%'
+        pools:
+            redis.pool:
+                adapter: cache.adapter.redis
+                tags: true
+                default_lifetime: 86400 #day

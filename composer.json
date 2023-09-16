@@ -32,6 +32,8 @@
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^7.2",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "liip/test-fixtures-bundle": "^2.6",
         "openswoole/ide-helper": "^4.11",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-symfony": "^1.3",

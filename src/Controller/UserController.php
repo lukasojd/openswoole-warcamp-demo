@@ -10,6 +10,7 @@ use App\Exception\UserAlreadyExistsException;
 use App\Facade\UserFacade;
 use App\Response\User\UserCreateResponse;
 use App\Response\User\UserListResponse;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,8 +29,15 @@ final readonly class UserController
         return $this->userFacade->getList();
     }
 
+    #[Route('/users/cached', methods: [RequestMethod::GET->value])]
+    public function getCacheList(): UserListResponse
+    {
+        return $this->userFacade->getCacheList();
+    }
+
     /**
      * @throws UserAlreadyExistsException
+     * @throws InvalidArgumentException
      */
     #[Route('/user', methods: [RequestMethod::PUT->value])]
     public function createUser(#[MapRequestPayload] CreateUserQuery $getUserDto): UserCreateResponse
