@@ -19,4 +19,10 @@ reload:
 	docker compose down
 	docker compose up -d
 
+banchmark-mysql:
+	ab -n 50000 -c 100 -k  http://localhost/users
+
+banchmark-redis:
+	ab -n 50000 -c 100 -k  http://localhost/users/cached
+
 init: init-config composer-install migrationsApp migrationsTest docker-up

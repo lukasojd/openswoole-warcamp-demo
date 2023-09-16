@@ -10,12 +10,12 @@ services:
     volumes:
       - .:/app
     environment:
-      - APP_ENV=dev
-      - APP_DEBUG=1
+      - APP_ENV=prod
+      - APP_DEBUG=0
       - KERNEL_CLASS=App\Kernel
       - SWOOLE_WORKER_NUM=5
       - SWOOLE_REACTOR_NUM=3
-      - SWOOLE_MAX_REQUEST=2000
+      - SWOOLE_MAX_REQUEST=1000
       - MAX_REQUEST_GRACE=1000
       - DATABASE_URL=postgresql://app:!ChangeMe!@database:5432/app
       - TEST_DATABASE_URL=postgresql://app:!ChangeMe!@test_database:5432/app
