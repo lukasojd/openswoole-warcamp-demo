@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: demo_app
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - .:/app
+    environment:
+      - APP_ENV=dev
+      - APP_DEBUG=1
+      - KERNEL_CLASS=App\Kernel
+      - SWOOLE_WORKER_NUM=5
+      - SWOOLE_REACTOR_NUM=3
+      - SWOOLE_MAX_REQUEST=2000
+      - MAX_REQUEST_GRACE=1000
+      - DATABASE_URL=postgresql://app:!ChangeMe!@database:5432/app
+      - TEST_DATABASE_URL=postgresql://app:!ChangeMe!@test_database:5432/app
+    entrypoint:
+    command: 'php ./public/index.php'
+    links:
+      - database
+      - test_database
+  database:
+    container_name: demo_database
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+  test_database:
+    container_name: demo_test_database
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    volumes:
+      - test_database_data:/var/lib/postgresql/data:rw
+
+volumes:
+  database_data:
+  test_database_data:

@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+###> doctrine/doctrine-bundle ###
+  database:
+    ports:
+      - "5432"
+###< doctrine/doctrine-bundle ###
+  adminer:
+    image: adminer
+    restart: always
+    links:
+      - database
+    ports:
+      - "8080:8080"
